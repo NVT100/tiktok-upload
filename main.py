@@ -18,6 +18,6 @@ videos = [
 
 ]
 while x <= number_of_posts_times_6:
-    auth = AuthBackend(cookies='C:\\Users\\nvt96\\Documents\\Uploader\\cookies.txt')
+    auth = AuthBackend(cookies='C:\\Users\\abiko\\Documents\\Uploader\\cookies.txt')
     upload_videos(videos=videos, auth=auth, headless=True)
     x = x+1
