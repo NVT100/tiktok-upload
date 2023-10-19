@@ -1,0 +1,48 @@
+<html>
+<head>
+<title>__init__.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #5f826b; font-style: italic;}
+.s1 { color: #bcbec4;}
+.s2 { color: #cf8e6d;}
+.s3 { color: #bcbec4;}
+.s4 { color: #7a7e85;}
+.s5 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+__init__.py</font>
+</center></td></tr></table>
+<pre><span class="s0">&quot;&quot;&quot; 
+TikTok Uploader Initialization 
+&quot;&quot;&quot;</span>
+<span class="s2">from </span><span class="s1">os</span><span class="s3">.</span><span class="s1">path </span><span class="s2">import </span><span class="s1">abspath</span><span class="s3">, </span><span class="s1">join</span><span class="s3">, </span><span class="s1">dirname</span>
+<span class="s2">import </span><span class="s1">logging</span>
+
+<span class="s2">import </span><span class="s1">toml</span>
+
+
+<span class="s4">## Load Config</span>
+<span class="s1">src_dir </span><span class="s3">= </span><span class="s1">abspath</span><span class="s3">(</span><span class="s1">dirname</span><span class="s3">(</span><span class="s1">__file__</span><span class="s3">))</span>
+<span class="s1">config </span><span class="s3">= </span><span class="s1">toml</span><span class="s3">.</span><span class="s1">load</span><span class="s3">(</span><span class="s1">join</span><span class="s3">(</span><span class="s1">src_dir</span><span class="s3">, </span><span class="s5">'config.toml'</span><span class="s3">))</span>
+
+<span class="s4">## Setup Logging</span>
+<span class="s1">logger </span><span class="s3">= </span><span class="s1">logging</span><span class="s3">.</span><span class="s1">getLogger</span><span class="s3">(</span><span class="s1">__name__</span><span class="s3">)</span>
+<span class="s1">logger</span><span class="s3">.</span><span class="s1">setLevel</span><span class="s3">(</span><span class="s1">logging</span><span class="s3">.</span><span class="s1">DEBUG</span><span class="s3">)</span>
+
+<span class="s1">formatter </span><span class="s3">= </span><span class="s1">logging</span><span class="s3">.</span><span class="s1">Formatter</span><span class="s3">(</span>
+    <span class="s5">'%(asctime)s %(message)s'</span><span class="s3">,</span>
+    <span class="s1">datefmt</span><span class="s3">=</span><span class="s5">'[%H:%M:%S]'</span>
+<span class="s3">)</span>
+
+<span class="s1">stream_handler </span><span class="s3">= </span><span class="s1">logging</span><span class="s3">.</span><span class="s1">StreamHandler</span><span class="s3">()</span>
+<span class="s1">stream_handler</span><span class="s3">.</span><span class="s1">setLevel</span><span class="s3">(</span><span class="s1">logging</span><span class="s3">.</span><span class="s1">DEBUG</span><span class="s3">)</span>
+<span class="s1">stream_handler</span><span class="s3">.</span><span class="s1">setFormatter</span><span class="s3">(</span><span class="s1">formatter</span><span class="s3">)</span>
+<span class="s1">logger</span><span class="s3">.</span><span class="s1">addHandler</span><span class="s3">(</span><span class="s1">stream_handler</span><span class="s3">)</span>
+</pre>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<html>
+<head>
+<title>browsers.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #5f826b; font-style: italic;}
+.s1 { color: #bcbec4;}
+.s2 { color: #cf8e6d;}
+.s3 { color: #bcbec4;}
+.s4 { color: #7a7e85;}
+.s5 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+browsers.py</font>
+</center></td></tr></table>
+<pre><span class="s0">&quot;&quot;&quot;Gets the browser's given the user's input&quot;&quot;&quot;</span>
+<span class="s2">from </span><span class="s1">selenium</span><span class="s3">.</span><span class="s1">webdriver</span><span class="s3">.</span><span class="s1">chrome</span><span class="s3">.</span><span class="s1">options </span><span class="s2">import </span><span class="s1">Options </span><span class="s2">as </span><span class="s1">ChromeOptions</span>
+<span class="s2">from </span><span class="s1">selenium</span><span class="s3">.</span><span class="s1">webdriver</span><span class="s3">.</span><span class="s1">firefox</span><span class="s3">.</span><span class="s1">options </span><span class="s2">import </span><span class="s1">Options </span><span class="s2">as </span><span class="s1">FirefoxOptions</span>
+<span class="s2">from </span><span class="s1">selenium</span><span class="s3">.</span><span class="s1">webdriver</span><span class="s3">.</span><span class="s1">safari</span><span class="s3">.</span><span class="s1">options </span><span class="s2">import </span><span class="s1">Options </span><span class="s2">as </span><span class="s1">SafariOptions</span>
+<span class="s2">from </span><span class="s1">selenium</span><span class="s3">.</span><span class="s1">webdriver</span><span class="s3">.</span><span class="s1">chromium </span><span class="s2">import </span><span class="s1">options </span><span class="s2">as </span><span class="s1">ChromiumOptions</span>
+<span class="s2">from </span><span class="s1">selenium</span><span class="s3">.</span><span class="s1">webdriver</span><span class="s3">.</span><span class="s1">edge</span><span class="s3">.</span><span class="s1">options </span><span class="s2">import </span><span class="s1">Options </span><span class="s2">as </span><span class="s1">EdgeOptions</span>
+<span class="s2">from </span><span class="s1">selenium</span><span class="s3">.</span><span class="s1">webdriver</span><span class="s3">.</span><span class="s1">ie</span><span class="s3">.</span><span class="s1">options </span><span class="s2">import </span><span class="s1">Options </span><span class="s2">as </span><span class="s1">IEOptions</span>
+
+<span class="s4"># Webdriver managers</span>
+<span class="s2">from </span><span class="s1">selenium</span><span class="s3">.</span><span class="s1">webdriver</span><span class="s3">.</span><span class="s1">chrome</span><span class="s3">.</span><span class="s1">service </span><span class="s2">import </span><span class="s1">Service </span><span class="s2">as </span><span class="s1">ChromeService</span>
+<span class="s2">from </span><span class="s1">webdriver_manager</span><span class="s3">.</span><span class="s1">chrome </span><span class="s2">import </span><span class="s1">ChromeDriverManager</span><span class="s3">, </span><span class="s1">ChromeType</span>
+<span class="s2">from </span><span class="s1">webdriver_manager</span><span class="s3">.</span><span class="s1">microsoft </span><span class="s2">import </span><span class="s1">IEDriverManager</span>
+<span class="s2">from </span><span class="s1">selenium</span><span class="s3">.</span><span class="s1">webdriver</span><span class="s3">.</span><span class="s1">ie</span><span class="s3">.</span><span class="s1">service </span><span class="s2">import </span><span class="s1">Service </span><span class="s2">as </span><span class="s1">IEService</span>
+<span class="s2">from </span><span class="s1">selenium</span><span class="s3">.</span><span class="s1">webdriver</span><span class="s3">.</span><span class="s1">safari</span><span class="s3">.</span><span class="s1">service </span><span class="s2">import </span><span class="s1">Service </span><span class="s2">as </span><span class="s1">SafariService</span>
+<span class="s2">from </span><span class="s1">selenium</span><span class="s3">.</span><span class="s1">webdriver</span><span class="s3">.</span><span class="s1">firefox</span><span class="s3">.</span><span class="s1">service </span><span class="s2">import </span><span class="s1">Service </span><span class="s2">as </span><span class="s1">FirefoxService</span>
+<span class="s2">from </span><span class="s1">webdriver_manager</span><span class="s3">.</span><span class="s1">firefox </span><span class="s2">import </span><span class="s1">GeckoDriverManager</span>
+<span class="s2">from </span><span class="s1">webdriver_manager</span><span class="s3">.</span><span class="s1">microsoft </span><span class="s2">import </span><span class="s1">EdgeChromiumDriverManager</span>
+<span class="s2">from </span><span class="s1">selenium</span><span class="s3">.</span><span class="s1">webdriver</span><span class="s3">.</span><span class="s1">edge</span><span class="s3">.</span><span class="s1">service </span><span class="s2">import </span><span class="s1">Service </span><span class="s2">as </span><span class="s1">EdgeService</span>
+
+<span class="s2">from </span><span class="s1">selenium </span><span class="s2">import </span><span class="s1">webdriver</span>
+
+<span class="s2">from </span><span class="s1">tiktok_uploader </span><span class="s2">import </span><span class="s1">config</span><span class="s3">, </span><span class="s1">logger</span>
+
+
+<span class="s2">def </span><span class="s1">get_browser</span><span class="s3">(</span><span class="s1">name</span><span class="s3">: </span><span class="s1">str </span><span class="s3">= </span><span class="s5">'chrome'</span><span class="s3">, </span><span class="s1">options</span><span class="s3">=</span><span class="s2">None</span><span class="s3">, *</span><span class="s1">args</span><span class="s3">, **</span><span class="s1">kwargs</span><span class="s3">) </span><span class="s1">-&gt; webdriver</span><span class="s3">:</span>
+    <span class="s0">&quot;&quot;&quot; 
+    Gets a browser based on the name with the ability to pass in additional arguments 
+    &quot;&quot;&quot;</span>
+
+    <span class="s4"># get the web driver for the browser</span>
+    <span class="s1">driver_to_use </span><span class="s3">= </span><span class="s1">get_driver</span><span class="s3">(</span><span class="s1">name</span><span class="s3">=</span><span class="s1">name</span><span class="s3">, *</span><span class="s1">args</span><span class="s3">, **</span><span class="s1">kwargs</span><span class="s3">)</span>
+
+    <span class="s4"># gets the options for the browser</span>
+
+    <span class="s1">options </span><span class="s3">= </span><span class="s1">options </span><span class="s2">or </span><span class="s1">get_default_options</span><span class="s3">(</span><span class="s1">name</span><span class="s3">=</span><span class="s1">name</span><span class="s3">, *</span><span class="s1">args</span><span class="s3">, **</span><span class="s1">kwargs</span><span class="s3">)</span>
+
+    <span class="s4"># combines them together into a completed driver</span>
+    <span class="s1">service </span><span class="s3">= </span><span class="s1">get_service</span><span class="s3">(</span><span class="s1">name</span><span class="s3">=</span><span class="s1">name</span><span class="s3">)</span>
+    <span class="s2">if </span><span class="s1">service</span><span class="s3">:</span>
+        <span class="s1">driver </span><span class="s3">= </span><span class="s1">driver_to_use</span><span class="s3">(</span><span class="s1">service</span><span class="s3">=</span><span class="s1">service</span><span class="s3">, </span><span class="s1">options</span><span class="s3">=</span><span class="s1">options</span><span class="s3">)</span>
+    <span class="s2">else</span><span class="s3">:</span>
+        <span class="s1">driver </span><span class="s3">= </span><span class="s1">driver_to_use</span><span class="s3">(</span><span class="s1">options</span><span class="s3">=</span><span class="s1">options</span><span class="s3">)</span>
+
+    <span class="s1">driver</span><span class="s3">.</span><span class="s1">implicitly_wait</span><span class="s3">(</span><span class="s1">config</span><span class="s3">[</span><span class="s5">'implicit_wait'</span><span class="s3">])</span>
+
+    <span class="s2">return </span><span class="s1">driver</span>
+
+
+<span class="s2">def </span><span class="s1">get_driver</span><span class="s3">(</span><span class="s1">name</span><span class="s3">: </span><span class="s1">str </span><span class="s3">= </span><span class="s5">'chrome'</span><span class="s3">, *</span><span class="s1">args</span><span class="s3">, **</span><span class="s1">kwargs</span><span class="s3">) </span><span class="s1">-&gt; webdriver</span><span class="s3">:</span>
+    <span class="s0">&quot;&quot;&quot; 
+    Gets the web driver function for the browser 
+    &quot;&quot;&quot;</span>
+    <span class="s2">if </span><span class="s1">_clean_name</span><span class="s3">(</span><span class="s1">name</span><span class="s3">) </span><span class="s2">in </span><span class="s1">drivers</span><span class="s3">:</span>
+        <span class="s2">return </span><span class="s1">drivers</span><span class="s3">[</span><span class="s1">name</span><span class="s3">]</span>
+
+    <span class="s2">raise </span><span class="s1">UnsupportedBrowserException</span><span class="s3">()</span>
+
+
+<span class="s2">def </span><span class="s1">get_service</span><span class="s3">(</span><span class="s1">name</span><span class="s3">: </span><span class="s1">str </span><span class="s3">= </span><span class="s5">'chrome'</span><span class="s3">):</span>
+    <span class="s0">&quot;&quot;&quot; 
+    Gets a service to install the browser driver per webdriver-manager docs 
+ 
+    https://pypi.org/project/webdriver-manager/ 
+    &quot;&quot;&quot;</span>
+    <span class="s2">if </span><span class="s1">_clean_name</span><span class="s3">(</span><span class="s1">name</span><span class="s3">) </span><span class="s2">in </span><span class="s1">services</span><span class="s3">:</span>
+        <span class="s2">return </span><span class="s1">services</span><span class="s3">[</span><span class="s1">name</span><span class="s3">]()</span>
+
+    <span class="s2">return None </span><span class="s4"># Safari doesn't need a service</span>
+
+
+<span class="s2">def </span><span class="s1">get_default_options</span><span class="s3">(</span><span class="s1">name</span><span class="s3">: </span><span class="s1">str</span><span class="s3">, *</span><span class="s1">args</span><span class="s3">, **</span><span class="s1">kwargs</span><span class="s3">):</span>
+    <span class="s0">&quot;&quot;&quot; 
+    Gets the default options for each browser to help remain undetected 
+    &quot;&quot;&quot;</span>
+    <span class="s1">name </span><span class="s3">= </span><span class="s1">_clean_name</span><span class="s3">(</span><span class="s1">name</span><span class="s3">)</span>
+
+    <span class="s2">if </span><span class="s1">name </span><span class="s2">in </span><span class="s1">defaults</span><span class="s3">:</span>
+        <span class="s2">return </span><span class="s1">defaults</span><span class="s3">[</span><span class="s1">name</span><span class="s3">](*</span><span class="s1">args</span><span class="s3">, **</span><span class="s1">kwargs</span><span class="s3">)</span>
+
+    <span class="s2">raise </span><span class="s1">UnsupportedBrowserException</span><span class="s3">()</span>
+
+
+<span class="s2">def </span><span class="s1">chrome_defaults</span><span class="s3">(*</span><span class="s1">args</span><span class="s3">, </span><span class="s1">headless</span><span class="s3">: </span><span class="s1">bool </span><span class="s3">= </span><span class="s2">False</span><span class="s3">, **</span><span class="s1">kwargs</span><span class="s3">) </span><span class="s1">-&gt; ChromeOptions</span><span class="s3">:</span>
+    <span class="s0">&quot;&quot;&quot; 
+    Creates Chrome with Options 
+    &quot;&quot;&quot;</span>
+
+    <span class="s1">options </span><span class="s3">= </span><span class="s1">ChromeOptions</span><span class="s3">()</span>
+
+    <span class="s4">## regular</span>
+    <span class="s1">options</span><span class="s3">.</span><span class="s1">add_argument</span><span class="s3">(</span><span class="s5">'--disable-blink-features=AutomationControlled'</span><span class="s3">)</span>
+    <span class="s1">options</span><span class="s3">.</span><span class="s1">add_argument</span><span class="s3">(</span><span class="s5">'--profile-directory=Default'</span><span class="s3">)</span>
+
+    <span class="s4">## experimental</span>
+    <span class="s1">options</span><span class="s3">.</span><span class="s1">add_experimental_option</span><span class="s3">(</span><span class="s5">'excludeSwitches'</span><span class="s3">, [</span><span class="s5">'enable-automation'</span><span class="s3">])</span>
+    <span class="s1">options</span><span class="s3">.</span><span class="s1">add_experimental_option</span><span class="s3">(</span><span class="s5">'useAutomationExtension'</span><span class="s3">, </span><span class="s2">False</span><span class="s3">)</span>
+
+    <span class="s4"># headless</span>
+    <span class="s2">if </span><span class="s1">headless</span><span class="s3">:</span>
+        <span class="s1">options</span><span class="s3">.</span><span class="s1">add_argument</span><span class="s3">(</span><span class="s5">'--headless=new'</span><span class="s3">)</span>
+
+    <span class="s2">return </span><span class="s1">options</span>
+
+
+<span class="s2">def </span><span class="s1">firefox_defaults</span><span class="s3">(*</span><span class="s1">args</span><span class="s3">, </span><span class="s1">headless</span><span class="s3">: </span><span class="s1">bool </span><span class="s3">= </span><span class="s2">False</span><span class="s3">, **</span><span class="s1">kwargs</span><span class="s3">) </span><span class="s1">-&gt; FirefoxOptions</span><span class="s3">:</span>
+    <span class="s0">&quot;&quot;&quot; 
+    Creates Firefox with default options 
+    &quot;&quot;&quot;</span>
+
+    <span class="s1">options </span><span class="s3">= </span><span class="s1">FirefoxOptions</span><span class="s3">()</span>
+
+    <span class="s4"># default options</span>
+
+    <span class="s2">if </span><span class="s1">headless</span><span class="s3">:</span>
+        <span class="s1">options</span><span class="s3">.</span><span class="s1">add_argument</span><span class="s3">(</span><span class="s5">'--headless'</span><span class="s3">)</span>
+
+    <span class="s2">return </span><span class="s1">options</span>
+
+
+<span class="s2">def </span><span class="s1">safari_defaults</span><span class="s3">(*</span><span class="s1">args</span><span class="s3">, </span><span class="s1">headless</span><span class="s3">: </span><span class="s1">bool </span><span class="s3">= </span><span class="s2">False</span><span class="s3">, **</span><span class="s1">kwargs</span><span class="s3">) </span><span class="s1">-&gt; SafariOptions</span><span class="s3">:</span>
+    <span class="s0">&quot;&quot;&quot; 
+    Creates Safari with default options 
+    &quot;&quot;&quot;</span>
+    <span class="s1">options </span><span class="s3">= </span><span class="s1">SafariOptions</span><span class="s3">()</span>
+
+    <span class="s4"># default options</span>
+
+    <span class="s2">if </span><span class="s1">headless</span><span class="s3">:</span>
+        <span class="s1">options</span><span class="s3">.</span><span class="s1">add_argument</span><span class="s3">(</span><span class="s5">'--headless'</span><span class="s3">)</span>
+
+    <span class="s2">return </span><span class="s1">options</span>
+
+
+<span class="s2">def </span><span class="s1">edge_defaults</span><span class="s3">(*</span><span class="s1">args</span><span class="s3">, </span><span class="s1">headless</span><span class="s3">: </span><span class="s1">bool </span><span class="s3">= </span><span class="s2">False</span><span class="s3">, **</span><span class="s1">kwargs</span><span class="s3">) </span><span class="s1">-&gt; EdgeOptions</span><span class="s3">:</span>
+    <span class="s0">&quot;&quot;&quot; 
+    Creates Edge with default options 
+    &quot;&quot;&quot;</span>
+    <span class="s1">options </span><span class="s3">= </span><span class="s1">EdgeOptions</span><span class="s3">()</span>
+
+    <span class="s4"># default options</span>
+
+    <span class="s2">if </span><span class="s1">headless</span><span class="s3">:</span>
+        <span class="s1">options</span><span class="s3">.</span><span class="s1">add_argument</span><span class="s3">(</span><span class="s5">'--headless'</span><span class="s3">)</span>
+
+    <span class="s2">return </span><span class="s1">options</span>
+
+<span class="s4"># Misc</span>
+<span class="s2">class </span><span class="s1">UnsupportedBrowserException</span><span class="s3">(</span><span class="s1">Exception</span><span class="s3">):</span>
+    <span class="s0">&quot;&quot;&quot; 
+    Browser is not supported by the library 
+ 
+    Supported browsers are: 
+        - Chrome 
+        - Firefox 
+        - Safari 
+        - Edge 
+    &quot;&quot;&quot;</span>
+
+    <span class="s2">def </span><span class="s1">__init__</span><span class="s3">(</span><span class="s1">self</span><span class="s3">, </span><span class="s1">message</span><span class="s3">=</span><span class="s2">None</span><span class="s3">):</span>
+        <span class="s1">super</span><span class="s3">().</span><span class="s1">__init__</span><span class="s3">(</span><span class="s1">message </span><span class="s2">or </span><span class="s1">self</span><span class="s3">.</span><span class="s1">__doc__</span><span class="s3">)</span>
+
+
+<span class="s2">def </span><span class="s1">_clean_name</span><span class="s3">(</span><span class="s1">name</span><span class="s3">: </span><span class="s1">str</span><span class="s3">) </span><span class="s1">-&gt; str</span><span class="s3">:</span>
+    <span class="s0">&quot;&quot;&quot; 
+    Cleans the name of the browser to make it easier to use 
+    &quot;&quot;&quot;</span>
+    <span class="s2">return </span><span class="s1">name</span><span class="s3">.</span><span class="s1">strip</span><span class="s3">().</span><span class="s1">lower</span><span class="s3">()</span>
+
+
+<span class="s1">drivers </span><span class="s3">= {</span>
+    <span class="s5">'chrome'</span><span class="s3">: </span><span class="s1">webdriver</span><span class="s3">.</span><span class="s1">Chrome</span><span class="s3">,</span>
+    <span class="s5">'firefox'</span><span class="s3">: </span><span class="s1">webdriver</span><span class="s3">.</span><span class="s1">Firefox</span><span class="s3">,</span>
+    <span class="s5">'safari'</span><span class="s3">: </span><span class="s1">webdriver</span><span class="s3">.</span><span class="s1">Safari</span><span class="s3">,</span>
+    <span class="s5">'edge'</span><span class="s3">: </span><span class="s1">webdriver</span><span class="s3">.</span><span class="s1">ChromiumEdge</span><span class="s3">,</span>
+<span class="s3">}</span>
+
+<span class="s1">defaults </span><span class="s3">= {</span>
+    <span class="s5">'chrome'</span><span class="s3">: </span><span class="s1">chrome_defaults</span><span class="s3">,</span>
+    <span class="s5">'firefox'</span><span class="s3">: </span><span class="s1">firefox_defaults</span><span class="s3">,</span>
+    <span class="s5">'safari'</span><span class="s3">: </span><span class="s1">safari_defaults</span><span class="s3">,</span>
+    <span class="s5">'edge'</span><span class="s3">: </span><span class="s1">edge_defaults</span><span class="s3">,</span>
+<span class="s3">}</span>
+
+
+<span class="s1">services </span><span class="s3">= {</span>
+    <span class="s5">'chrome'</span><span class="s3">: </span><span class="s2">lambda </span><span class="s3">: </span><span class="s1">ChromeService</span><span class="s3">(</span><span class="s1">ChromeDriverManager</span><span class="s3">().</span><span class="s1">install</span><span class="s3">()),</span>
+    <span class="s5">'firefox'</span><span class="s3">: </span><span class="s2">lambda </span><span class="s3">: </span><span class="s1">FirefoxService</span><span class="s3">(</span><span class="s1">GeckoDriverManager</span><span class="s3">().</span><span class="s1">install</span><span class="s3">()),</span>
+    <span class="s5">'edge'</span><span class="s3">: </span><span class="s2">lambda </span><span class="s3">: </span><span class="s1">EdgeService</span><span class="s3">(</span><span class="s1">EdgeChromiumDriverManager</span><span class="s3">().</span><span class="s1">install</span><span class="s3">()),</span>
+<span class="s3">}</span>
+</pre>
+</body>
+</html>

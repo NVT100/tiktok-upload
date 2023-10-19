@@ -1,0 +1,161 @@
+<html>
+<head>
+<title>cli.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #5f826b; font-style: italic;}
+.s1 { color: #bcbec4;}
+.s2 { color: #cf8e6d;}
+.s3 { color: #bcbec4;}
+.s4 { color: #7a7e85;}
+.s5 { color: #6aab73;}
+.s6 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+cli.py</font>
+</center></td></tr></table>
+<pre><span class="s0">&quot;&quot;&quot; 
+CLI is a controller for the command line use of this library 
+&quot;&quot;&quot;</span>
+
+<span class="s2">from </span><span class="s1">argparse </span><span class="s2">import </span><span class="s1">ArgumentParser</span>
+<span class="s2">from </span><span class="s1">os</span><span class="s3">.</span><span class="s1">path </span><span class="s2">import </span><span class="s1">exists</span><span class="s3">, </span><span class="s1">join</span>
+
+<span class="s2">from </span><span class="s1">tiktok_uploader</span><span class="s3">.</span><span class="s1">upload </span><span class="s2">import </span><span class="s1">upload_video</span>
+<span class="s2">from </span><span class="s1">tiktok_uploader</span><span class="s3">.</span><span class="s1">auth </span><span class="s2">import </span><span class="s1">login_accounts</span><span class="s3">, </span><span class="s1">save_cookies</span>
+
+<span class="s2">def </span><span class="s1">main</span><span class="s3">():</span>
+    <span class="s0">&quot;&quot;&quot; 
+    Passes arguments into the program 
+    &quot;&quot;&quot;</span>
+    <span class="s1">args </span><span class="s3">= </span><span class="s1">get_uploader_args</span><span class="s3">()</span>
+
+    <span class="s1">args </span><span class="s3">= </span><span class="s1">validate_uploader_args</span><span class="s3">(</span><span class="s1">args</span><span class="s3">=</span><span class="s1">args</span><span class="s3">)</span>
+
+    <span class="s4"># runs the program using the arguments provided</span>
+    <span class="s1">result </span><span class="s3">= </span><span class="s1">upload_video</span><span class="s3">(</span>
+        <span class="s1">filename</span><span class="s3">=</span><span class="s1">args</span><span class="s3">.</span><span class="s1">video</span><span class="s3">,</span>
+        <span class="s1">description</span><span class="s3">=</span><span class="s1">args</span><span class="s3">.</span><span class="s1">description</span><span class="s3">,</span>
+        <span class="s1">username</span><span class="s3">=</span><span class="s1">args</span><span class="s3">.</span><span class="s1">username</span><span class="s3">,</span>
+        <span class="s1">password</span><span class="s3">=</span><span class="s1">args</span><span class="s3">.</span><span class="s1">password</span><span class="s3">,</span>
+        <span class="s1">cookies</span><span class="s3">=</span><span class="s1">args</span><span class="s3">.</span><span class="s1">cookies</span><span class="s3">,</span>
+        <span class="s1">sessionid</span><span class="s3">=</span><span class="s1">args</span><span class="s3">.</span><span class="s1">sessionid</span><span class="s3">,</span>
+        <span class="s1">headless</span><span class="s3">=</span><span class="s1">args</span><span class="s3">.</span><span class="s1">headless</span>
+    <span class="s3">)</span>
+
+    <span class="s1">print</span><span class="s3">(</span><span class="s5">'-------------------------'</span><span class="s3">)</span>
+    <span class="s2">if </span><span class="s1">result</span><span class="s3">:</span>
+        <span class="s1">print</span><span class="s3">(</span><span class="s5">'Error while uploading video'</span><span class="s3">)</span>
+    <span class="s2">else</span><span class="s3">:</span>
+        <span class="s1">print</span><span class="s3">(</span><span class="s5">'Video uploaded successfully'</span><span class="s3">)</span>
+    <span class="s1">print</span><span class="s3">(</span><span class="s5">'-------------------------'</span><span class="s3">)</span>
+
+
+<span class="s2">def </span><span class="s1">get_uploader_args</span><span class="s3">():</span>
+    <span class="s0">&quot;&quot;&quot; 
+    Generates a parser which is used to get all of the video's information 
+    &quot;&quot;&quot;</span>
+    <span class="s1">parser </span><span class="s3">= </span><span class="s1">ArgumentParser</span><span class="s3">(</span>
+        <span class="s1">description</span><span class="s3">=</span><span class="s5">'TikTok uploader is a video uploader which can upload a' </span><span class="s3">+</span>
+        <span class="s5">'video from your computer to the TikTok using selenium automation'</span>
+    <span class="s3">)</span>
+
+    <span class="s4"># primary arguments</span>
+    <span class="s1">parser</span><span class="s3">.</span><span class="s1">add_argument</span><span class="s3">(</span><span class="s5">'-v'</span><span class="s3">, </span><span class="s5">'--video'</span><span class="s3">, </span><span class="s1">help</span><span class="s3">=</span><span class="s5">'Video file'</span><span class="s3">, </span><span class="s1">required</span><span class="s3">=</span><span class="s2">True</span><span class="s3">)</span>
+    <span class="s1">parser</span><span class="s3">.</span><span class="s1">add_argument</span><span class="s3">(</span><span class="s5">'-d'</span><span class="s3">, </span><span class="s5">'--description'</span><span class="s3">, </span><span class="s1">help</span><span class="s3">=</span><span class="s5">'Description'</span><span class="s3">, </span><span class="s1">default</span><span class="s3">=</span><span class="s5">''</span><span class="s3">)</span>
+
+    <span class="s4"># authentication arguments</span>
+    <span class="s1">parser</span><span class="s3">.</span><span class="s1">add_argument</span><span class="s3">(</span><span class="s5">'-c'</span><span class="s3">, </span><span class="s5">'--cookies'</span><span class="s3">, </span><span class="s1">help</span><span class="s3">=</span><span class="s5">'The cookies you want to use'</span><span class="s3">)</span>
+    <span class="s1">parser</span><span class="s3">.</span><span class="s1">add_argument</span><span class="s3">(</span><span class="s5">'-s'</span><span class="s3">, </span><span class="s5">'--sessionid'</span><span class="s3">, </span><span class="s1">help</span><span class="s3">=</span><span class="s5">'The session id you want to use'</span><span class="s3">)</span>
+
+    <span class="s1">parser</span><span class="s3">.</span><span class="s1">add_argument</span><span class="s3">(</span><span class="s5">'-u'</span><span class="s3">, </span><span class="s5">'--username'</span><span class="s3">, </span><span class="s1">help</span><span class="s3">=</span><span class="s5">'Your TikTok email / username'</span><span class="s3">)</span>
+    <span class="s1">parser</span><span class="s3">.</span><span class="s1">add_argument</span><span class="s3">(</span><span class="s5">'-p'</span><span class="s3">, </span><span class="s5">'--password'</span><span class="s3">, </span><span class="s1">help</span><span class="s3">=</span><span class="s5">'Your TikTok password'</span><span class="s3">)</span>
+
+    <span class="s4"># selenium arguments</span>
+    <span class="s1">parser</span><span class="s3">.</span><span class="s1">add_argument</span><span class="s3">(</span><span class="s5">'--headless'</span><span class="s3">, </span><span class="s1">action</span><span class="s3">=</span><span class="s5">'store_true'</span><span class="s3">, </span><span class="s1">default</span><span class="s3">=</span><span class="s2">True</span><span class="s3">,</span>
+                         <span class="s1">help</span><span class="s3">=</span><span class="s5">'Runs the program in headless mode (no browser window)'</span><span class="s3">)</span>
+
+    <span class="s2">return </span><span class="s1">parser</span><span class="s3">.</span><span class="s1">parse_args</span><span class="s3">()</span>
+
+
+<span class="s2">def </span><span class="s1">validate_uploader_args</span><span class="s3">(</span><span class="s1">args</span><span class="s3">: </span><span class="s1">dict</span><span class="s3">):</span>
+    <span class="s0">&quot;&quot;&quot; 
+    Preforms validation on each input given 
+    &quot;&quot;&quot;</span>
+
+    <span class="s4"># Makes sure the video file exists</span>
+    <span class="s2">if not </span><span class="s1">exists</span><span class="s3">(</span><span class="s1">args</span><span class="s3">.</span><span class="s1">video</span><span class="s3">):</span>
+        <span class="s2">raise </span><span class="s1">FileNotFoundError</span><span class="s3">(</span><span class="s5">f'Could not find the video file at </span><span class="s2">{</span><span class="s1">args</span><span class="s3">[</span><span class="s5">&quot;video&quot;</span><span class="s3">]</span><span class="s2">}</span><span class="s5">'</span><span class="s3">)</span>
+
+    <span class="s4"># User can not pass in both cookies and username / password</span>
+    <span class="s2">if </span><span class="s1">args</span><span class="s3">.</span><span class="s1">cookies </span><span class="s2">and </span><span class="s3">(</span><span class="s1">args</span><span class="s3">.</span><span class="s1">username </span><span class="s2">or </span><span class="s1">args</span><span class="s3">.</span><span class="s1">password</span><span class="s3">):</span>
+        <span class="s2">raise </span><span class="s1">ValueError</span><span class="s3">(</span><span class="s5">'You can not pass in both cookies and username / password'</span><span class="s3">)</span>
+
+    <span class="s2">return </span><span class="s1">args</span>
+
+
+<span class="s2">def </span><span class="s1">auth</span><span class="s3">():</span>
+    <span class="s0">&quot;&quot;&quot; 
+    Authenticates the user 
+    &quot;&quot;&quot;</span>
+    <span class="s1">args </span><span class="s3">= </span><span class="s1">get_auth_args</span><span class="s3">()</span>
+    <span class="s1">args </span><span class="s3">= </span><span class="s1">validate_auth_args</span><span class="s3">(</span><span class="s1">args</span><span class="s3">=</span><span class="s1">args</span><span class="s3">)</span>
+
+    <span class="s4"># runs the program using the arguments provided</span>
+    <span class="s2">if </span><span class="s1">args</span><span class="s3">.</span><span class="s1">input</span><span class="s3">:</span>
+        <span class="s1">login_info </span><span class="s3">= </span><span class="s1">get_login_info</span><span class="s3">(</span><span class="s1">path</span><span class="s3">=</span><span class="s1">args</span><span class="s3">.</span><span class="s1">input</span><span class="s3">, </span><span class="s1">header</span><span class="s3">=</span><span class="s1">args</span><span class="s3">.</span><span class="s1">header</span><span class="s3">)</span>
+    <span class="s2">else</span><span class="s3">:</span>
+        <span class="s1">login_info </span><span class="s3">= [(</span><span class="s1">args</span><span class="s3">.</span><span class="s1">username</span><span class="s3">, </span><span class="s1">args</span><span class="s3">.</span><span class="s1">password</span><span class="s3">)]</span>
+
+    <span class="s1">username_and_cookies </span><span class="s3">= </span><span class="s1">login_accounts</span><span class="s3">(</span><span class="s1">accounts</span><span class="s3">=</span><span class="s1">login_info</span><span class="s3">)</span>
+
+    <span class="s2">for </span><span class="s1">username</span><span class="s3">, </span><span class="s1">cookies </span><span class="s2">in </span><span class="s1">username_and_cookies</span><span class="s3">.</span><span class="s1">items</span><span class="s3">():</span>
+        <span class="s1">save_cookies</span><span class="s3">(</span><span class="s1">path</span><span class="s3">=</span><span class="s1">join</span><span class="s3">(</span><span class="s1">args</span><span class="s3">.</span><span class="s1">output</span><span class="s3">, </span><span class="s1">username </span><span class="s3">+ </span><span class="s5">'.txt'</span><span class="s3">), </span><span class="s1">cookies</span><span class="s3">=</span><span class="s1">cookies</span><span class="s3">)</span>
+
+
+<span class="s2">def </span><span class="s1">get_auth_args</span><span class="s3">():</span>
+    <span class="s0">&quot;&quot;&quot; 
+    Generates a parser which is used to get all of the authentication information 
+    &quot;&quot;&quot;</span>
+    <span class="s1">parser </span><span class="s3">= </span><span class="s1">ArgumentParser</span><span class="s3">(</span>
+        <span class="s1">description</span><span class="s3">=</span><span class="s5">'TikTok Auth is a program which can log you into multiple accounts sequentially'</span>
+    <span class="s3">)</span>
+
+    <span class="s4"># authentication arguments</span>
+    <span class="s1">parser</span><span class="s3">.</span><span class="s1">add_argument</span><span class="s3">(</span><span class="s5">'-o'</span><span class="s3">, </span><span class="s5">'--output'</span><span class="s3">, </span><span class="s1">default</span><span class="s3">=</span><span class="s5">'tmp'</span><span class="s3">,</span>
+                        <span class="s1">help</span><span class="s3">=</span><span class="s5">'The output folder to save the cookies to'</span><span class="s3">)</span>
+    <span class="s1">parser</span><span class="s3">.</span><span class="s1">add_argument</span><span class="s3">(</span><span class="s5">'-i'</span><span class="s3">, </span><span class="s5">'--input'</span><span class="s3">, </span><span class="s1">help</span><span class="s3">=</span><span class="s5">'A csv file with username and password'</span><span class="s3">)</span>
+    <span class="s4"># parser.add_argument('-h', '--header', default=True,</span>
+    <span class="s4"># help='The header of the csv file which contains the username and password')</span>
+    <span class="s1">parser</span><span class="s3">.</span><span class="s1">add_argument</span><span class="s3">(</span><span class="s5">'-u'</span><span class="s3">, </span><span class="s5">'--username'</span><span class="s3">, </span><span class="s1">help</span><span class="s3">=</span><span class="s5">'Your TikTok email / username'</span><span class="s3">)</span>
+    <span class="s1">parser</span><span class="s3">.</span><span class="s1">add_argument</span><span class="s3">(</span><span class="s5">'-p'</span><span class="s3">, </span><span class="s5">'--password'</span><span class="s3">, </span><span class="s1">help</span><span class="s3">=</span><span class="s5">'Your TikTok password'</span><span class="s3">)</span>
+
+    <span class="s2">return </span><span class="s1">parser</span><span class="s3">.</span><span class="s1">parse_args</span><span class="s3">()</span>
+
+<span class="s2">def </span><span class="s1">validate_auth_args</span><span class="s3">(</span><span class="s1">args</span><span class="s3">):</span>
+    <span class="s0">&quot;&quot;&quot; 
+    Preforms validation on each input given 
+    &quot;&quot;&quot;</span>
+    <span class="s4"># username and password or input files are mutually exclusive</span>
+    <span class="s2">if </span><span class="s3">(</span><span class="s1">args</span><span class="s3">[</span><span class="s5">'username'</span><span class="s3">] </span><span class="s2">and </span><span class="s1">args</span><span class="s3">[</span><span class="s5">'password'</span><span class="s3">]) </span><span class="s2">and </span><span class="s1">args</span><span class="s3">[</span><span class="s5">'input'</span><span class="s3">]:</span>
+        <span class="s2">raise </span><span class="s1">ValueError</span><span class="s3">(</span><span class="s5">'You can not pass in both username / password and input file'</span><span class="s3">)</span>
+
+    <span class="s2">return </span><span class="s1">args</span>
+
+
+<span class="s2">def </span><span class="s1">get_login_info</span><span class="s3">(</span><span class="s1">path</span><span class="s3">: </span><span class="s1">str</span><span class="s3">, </span><span class="s1">header</span><span class="s3">=</span><span class="s2">True</span><span class="s3">) </span><span class="s1">-&gt; list</span><span class="s3">:</span>
+    <span class="s0">&quot;&quot;&quot; 
+    Parses the input file into a list of usernames and passwords 
+    &quot;&quot;&quot;</span>
+    <span class="s2">with </span><span class="s1">open</span><span class="s3">(</span><span class="s1">path</span><span class="s3">, </span><span class="s5">'r'</span><span class="s3">, </span><span class="s1">encoding</span><span class="s3">=</span><span class="s5">'utf-8'</span><span class="s3">) </span><span class="s2">as </span><span class="s1">file</span><span class="s3">:</span>
+        <span class="s1">file </span><span class="s3">= </span><span class="s1">file</span><span class="s3">.</span><span class="s1">readlines</span><span class="s3">()</span>
+        <span class="s2">if </span><span class="s1">header</span><span class="s3">:</span>
+            <span class="s1">file </span><span class="s3">= </span><span class="s1">file</span><span class="s3">[</span><span class="s6">1</span><span class="s3">:]</span>
+        <span class="s2">return </span><span class="s3">[</span><span class="s1">line</span><span class="s3">.</span><span class="s1">split</span><span class="s3">(</span><span class="s5">','</span><span class="s3">)[:</span><span class="s6">2</span><span class="s3">] </span><span class="s2">for </span><span class="s1">line </span><span class="s2">in </span><span class="s1">file</span><span class="s3">]</span>
+</pre>
+</body>
+</html>

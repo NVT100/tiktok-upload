@@ -1,0 +1,81 @@
+<html>
+<head>
+<title>config.toml</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #7a7e85;}
+.s1 { color: #bcbec4;}
+.s2 { color: #cf8e6d;}
+.s3 { color: #bcbec4;}
+.s4 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+config.toml</font>
+</center></td></tr></table>
+<pre><span class="s0"># TikTok Uploader Default Configuation File</span>
+
+<span class="s2">headless </span><span class="s1">= </span><span class="s3">false</span>
+<span class="s2">quit_on_end </span><span class="s1">= </span><span class="s3">true</span>
+
+<span class="s0"># Messing around with inputs</span>
+<span class="s2">valid_path_names </span><span class="s1">= [</span><span class="s4">&quot;path&quot;</span><span class="s1">, </span><span class="s4">&quot;filename&quot;</span><span class="s1">, </span><span class="s4">&quot;video&quot;</span><span class="s1">, </span><span class="s4">&quot;video_path&quot;</span><span class="s1">]</span>
+<span class="s2">valid_descriptions </span><span class="s1">= [</span><span class="s4">&quot;description&quot;</span><span class="s1">, </span><span class="s4">&quot;desc&quot;</span><span class="s1">, </span><span class="s4">&quot;caption&quot;</span><span class="s1">]</span>
+
+<span class="s0"># Selenium Webdriver Waits</span>
+<span class="s2">implicit_wait </span><span class="s1">= 3 </span><span class="s0"># seconds</span>
+<span class="s2">explicit_wait </span><span class="s1">= 60 </span><span class="s0"># seconds</span>
+
+<span class="s2">supported_file_types </span><span class="s1">= [</span><span class="s4">&quot;mp4&quot;</span><span class="s1">, </span><span class="s4">&quot;mov&quot;</span><span class="s1">, </span><span class="s4">&quot;avi&quot;</span><span class="s1">, </span><span class="s4">&quot;wmv&quot;</span><span class="s1">, </span><span class="s4">&quot;flv&quot;</span><span class="s1">, </span><span class="s4">&quot;webm&quot;</span><span class="s1">, </span><span class="s4">&quot;mkv&quot;</span><span class="s1">, </span><span class="s4">&quot;m4v&quot;</span><span class="s1">, </span><span class="s4">&quot;3gp&quot;</span><span class="s1">, </span><span class="s4">&quot;3g2&quot;</span><span class="s1">, </span><span class="s4">&quot;gif&quot;</span><span class="s1">]</span>
+
+<span class="s2">max_description_length </span><span class="s1">= 150 </span><span class="s0"># characters</span>
+
+<span class="s1">[</span><span class="s2">paths</span><span class="s1">]</span>
+<span class="s2">main </span><span class="s1">= </span><span class="s4">&quot;https://www.tiktok.com/&quot;</span>
+<span class="s2">login </span><span class="s1">= </span><span class="s4">&quot;https://www.tiktok.com/login/phone-or-email/email&quot;</span>
+<span class="s2">upload </span><span class="s1">= </span><span class="s4">&quot;https://www.tiktok.com/creator-center/upload&quot;</span>
+
+<span class="s1">[</span><span class="s2">disguising</span><span class="s1">]</span>
+<span class="s2">user_agent </span><span class="s1">= </span><span class="s4">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'</span>
+
+<span class="s1">[</span><span class="s2">selectors</span><span class="s1">] </span><span class="s0"># Selenium XPATH selectors</span>
+
+	<span class="s1">[</span><span class="s2">selectors</span><span class="s1">.</span><span class="s2">login</span><span class="s1">]</span>
+	<span class="s2">username_field </span><span class="s1">= </span><span class="s4">&quot;//input[@name=</span><span class="s2">\&quot;</span><span class="s4">username</span><span class="s2">\&quot;</span><span class="s4">]&quot;</span>
+	<span class="s2">password_field </span><span class="s1">= </span><span class="s4">&quot;//input[@type=</span><span class="s2">\&quot;</span><span class="s4">password</span><span class="s2">\&quot;</span><span class="s4">]&quot;</span>
+	<span class="s2">login_button </span><span class="s1">= </span><span class="s4">&quot;//button[@type=</span><span class="s2">\&quot;</span><span class="s4">submit</span><span class="s2">\&quot;</span><span class="s4">]&quot;</span>
+	
+	<span class="s2">alert_user_if_failed </span><span class="s1">= </span><span class="s3">true </span><span class="s0"># sends an alert and waits instead of failing</span>
+	
+	<span class="s2">cookie_of_interest </span><span class="s1">= </span><span class="s4">&quot;sessionid&quot; </span><span class="s0"># cookie to check if login was successful</span>
+	
+	<span class="s1">[</span><span class="s2">selectors</span><span class="s1">.</span><span class="s2">upload</span><span class="s1">]</span>
+	<span class="s2">iframe </span><span class="s1">= </span><span class="s4">&quot;//iframe&quot;</span>
+	
+	<span class="s2">upload_video </span><span class="s1">= </span><span class="s4">&quot;//input[@type='file']&quot;</span>
+	<span class="s2">upload_in_progress </span><span class="s1">= </span><span class="s4">&quot;//*[.='Cancel']&quot;</span>
+	<span class="s2">upload_confirmation </span><span class="s1">= </span><span class="s4">&quot;//video&quot; </span>
+	<span class="s2">process_confirmation </span><span class="s1">= </span><span class="s4">&quot;//img[@draggable='false']&quot;</span>
+
+	<span class="s2">description </span><span class="s1">= </span><span class="s4">&quot;//div[@contenteditable='true']&quot;</span>
+
+	<span class="s2">visibility </span><span class="s1">= </span><span class="s4">&quot;//div[@class='tiktok-select-selector']&quot;</span>
+	<span class="s2">options </span><span class="s1">= [</span><span class="s4">&quot;Public&quot;</span><span class="s1">, </span><span class="s4">&quot;Friends&quot;</span><span class="s1">, </span><span class="s4">&quot;Private&quot;</span><span class="s1">]</span>
+
+	<span class="s2">hashtags </span><span class="s1">= </span><span class="s4">&quot;//div[@class='mentionSuggestions']//*[contains(text(), '{}')]&quot;</span>
+	<span class="s2">mentions </span><span class="s1">= </span><span class="s4">&quot;//div[contains(concat(' ', normalize-space(@class), ' '), 'user-id') and .='{}']/..&quot;</span>
+
+	<span class="s2">mention_box </span><span class="s1">= </span><span class="s4">&quot;//input[contains(concat(' ', normalize-space(@class), ' '), 'search-friends')]&quot;</span>
+
+	<span class="s2">comment </span><span class="s1">= </span><span class="s4">&quot;//label[.='Comment']/following-sibling::div/input&quot;</span>
+	<span class="s2">duet </span><span class="s1">= </span><span class="s4">&quot;//label[.='Duet']/following-sibling::div/input&quot;</span>
+	<span class="s2">stitch </span><span class="s1">= </span><span class="s4">&quot;//label[.='Stitch']/following-sibling::div/input&quot;</span>
+
+	<span class="s2">post </span><span class="s1">= </span><span class="s4">&quot;//button[.='Post']&quot;</span>
+	<span class="s2">post_confirmation </span><span class="s1">= </span><span class="s4">&quot;//div[.='Your videos are being uploaded to TikTok!']&quot;</span>
+</pre>
+</body>
+</html>

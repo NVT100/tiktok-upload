@@ -1,0 +1,46 @@
+<html>
+<head>
+<title>utils.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #5f826b; font-style: italic;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #cf8e6d;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+utils.py</font>
+</center></td></tr></table>
+<pre><span class="s0">&quot;&quot;&quot; 
+Utilities for TikTok Uploader 
+&quot;&quot;&quot;</span>
+
+<span class="s1">HEADER </span><span class="s2">= </span><span class="s3">'</span><span class="s4">\033</span><span class="s3">[95m'</span>
+<span class="s1">OKBLUE </span><span class="s2">= </span><span class="s3">'</span><span class="s4">\033</span><span class="s3">[94m'</span>
+<span class="s1">OKCYAN </span><span class="s2">= </span><span class="s3">'</span><span class="s4">\033</span><span class="s3">[96m'</span>
+<span class="s1">OKGREEN </span><span class="s2">= </span><span class="s3">'</span><span class="s4">\033</span><span class="s3">[92m'</span>
+<span class="s1">WARNING </span><span class="s2">= </span><span class="s3">'</span><span class="s4">\033</span><span class="s3">[93m'</span>
+<span class="s1">FAIL </span><span class="s2">= </span><span class="s3">'</span><span class="s4">\033</span><span class="s3">[91m'</span>
+<span class="s1">ENDC </span><span class="s2">= </span><span class="s3">'</span><span class="s4">\033</span><span class="s3">[0m'</span>
+<span class="s1">BOLD </span><span class="s2">= </span><span class="s3">'</span><span class="s4">\033</span><span class="s3">[1m'</span>
+<span class="s1">UNDERLINE </span><span class="s2">= </span><span class="s3">'</span><span class="s4">\033</span><span class="s3">[4m'</span>
+
+<span class="s4">def </span><span class="s1">bold</span><span class="s2">(</span><span class="s1">to_bold</span><span class="s2">: </span><span class="s1">str</span><span class="s2">) </span><span class="s1">-&gt; str</span><span class="s2">:</span>
+    <span class="s0">&quot;&quot;&quot; 
+    Returns the input bolded 
+    &quot;&quot;&quot;</span>
+    <span class="s4">return </span><span class="s1">BOLD </span><span class="s2">+ </span><span class="s1">to_bold </span><span class="s2">+ </span><span class="s1">ENDC</span>
+
+<span class="s4">def </span><span class="s1">green</span><span class="s2">(</span><span class="s1">to_green</span><span class="s2">: </span><span class="s1">str</span><span class="s2">) </span><span class="s1">-&gt; str</span><span class="s2">:</span>
+    <span class="s0">&quot;&quot;&quot; 
+    Returns the input green 
+    &quot;&quot;&quot;</span>
+    <span class="s4">return </span><span class="s1">OKGREEN </span><span class="s2">+ </span><span class="s1">to_green </span><span class="s2">+ </span><span class="s1">ENDC</span>
+</pre>
+</body>
+</html>
