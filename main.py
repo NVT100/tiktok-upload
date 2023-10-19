@@ -4,15 +4,15 @@ number_of_posts_times_6 = 1
 x = 0
 videos = [
     {
-        'path': 'C:\\Users\\Abi Master\\Documents\\Uploader\\a.mp4',
+        'path': 'C:\\Users\\abiko\\Documents\\Uploader\\a.mp4',
         'description': 'this is my description'
     },
     {
-        'path': 'C:\\Users\\Abi Master\\Documents\\Uploader\\a.mp4',
+        'path': 'C:\\Users\\abiko\\Documents\\Uploader\\a.mp4',
         'description': 'this is also my description'
     },
     {
-        'path': 'C:\\Users\\Abi Master\\Documents\\Uploader\\a.mp4',
+        'path': 'C:\\Users\\abiko\\Documents\\Uploader\\a.mp4',
         'description': 'this is my description'
     },
 
